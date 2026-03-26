@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String     @id @default(cuid())
+  name           String
+  email          String     @unique
+  hashedPassword String
+  company        String?
+  phone          String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  properties     Property[]
+  clients        Client[]
+  deals          Deal[]
+  viewings       Viewing[]
+}
+
+model Property {
+  id          String    @id @default(cuid())
+  title       String
+  address     String
+  city        String
+  postcode    String
+  price       Float
+  bedrooms    Int
+  bathrooms   Int
+  sqft        Int?
+  type        String    // detached, semi-detached, terraced, flat, bungalow
+  status      String    @default("available") // available, under-offer, sold, let, withdrawn
+  description String?
+  imageUrl    String?
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  deals       Deal[]
+  viewings    Viewing[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Client {
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  type      String    @default("buyer") // buyer, seller, landlord, tenant
+  notes     String?
+  budget    Float?
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  deals     Deal[]
+  viewings  Viewing[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Deal {
+  id         String   @id @default(cuid())
+  stage      String   @default("new-lead") // new-lead, viewing-booked, offer-made, offer-accepted, under-contract, completed, fallen-through
+  value      Float?
+  notes      String?
+  propertyId String?
+  property   Property? @relation(fields: [propertyId], references: [id])
+  clientId   String
+  client     Client   @relation(fields: [clientId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Viewing {
+  id         String   @id @default(cuid())
+  date       DateTime
+  time       String
+  notes      String?
+  status     String   @default("scheduled") // scheduled, completed, cancelled, no-show
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  clientId   String
+  client     Client   @relation(fields: [clientId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
