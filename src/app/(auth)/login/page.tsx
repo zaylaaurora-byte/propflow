@@ -7,8 +7,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Building2 } from "lucide-react"
+import { Building2, ArrowRight } from "lucide-react"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -36,45 +35,65 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-2">
-            <div className="flex items-center gap-2 text-primary">
-              <Building2 className="h-8 w-8" />
-              <span className="text-2xl font-bold">PropFlow</span>
+    <div className="min-h-screen flex items-center justify-center px-4 hero-gradient">
+      <div className="w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] flex items-center justify-center shadow-lg">
+              <Building2 className="h-5 w-5 text-white" />
             </div>
+            <span className="text-2xl font-bold gradient-text">PropFlow</span>
+          </Link>
+        </div>
+
+        {/* Card */}
+        <div className="glass-card rounded-2xl p-8">
+          <div className="text-center mb-6">
+            <h1 className="text-xl font-bold">Welcome back</h1>
+            <p className="text-sm text-muted-foreground mt-1">Sign in to your agency dashboard</p>
           </div>
-          <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Sign in to your account</CardDescription>
-        </CardHeader>
-        <CardContent>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-lg">
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg">
                 {error}
               </div>
             )}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="you@agency.com" required />
+              <Input id="email" name="email" type="email" placeholder="you@agency.com" required className="glass-input h-11" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" name="password" type="password" required />
+              <Input id="password" name="password" type="password" required className="glass-input h-11" />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full h-11 bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white border-0 hover:opacity-90 font-medium"
+              disabled={loading}
+            >
               {loading ? "Signing in..." : "Sign in"}
+              {!loading && <ArrowRight className="h-4 w-4 ml-2" />}
             </Button>
           </form>
-          <p className="text-center text-sm text-muted-foreground mt-4">
-            Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-primary hover:underline font-medium">
-              Sign up free
-            </Link>
-          </p>
-        </CardContent>
-      </Card>
+
+          <div className="mt-6 pt-4 border-t border-white/[0.06] text-center">
+            <p className="text-sm text-muted-foreground">
+              Don&apos;t have an account?{" "}
+              <Link href="/register" className="text-primary hover:underline font-medium">
+                Sign up free
+              </Link>
+            </p>
+          </div>
+        </div>
+
+        {/* Demo credentials */}
+        <div className="glass rounded-xl p-4 mt-4 text-center">
+          <p className="text-xs text-muted-foreground mb-1">Demo credentials</p>
+          <p className="text-sm font-mono text-foreground/80">demo@propflow.app / demo1234</p>
+        </div>
+      </div>
     </div>
   )
 }

@@ -14,63 +14,105 @@ model User {
   hashedPassword String
   company        String?
   phone          String?
+  role           String     @default("agent") // agent, admin, manager
+  avatar         String?
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   properties     Property[]
   clients        Client[]
   deals          Deal[]
   viewings       Viewing[]
+  offers         Offer[]
+  activities     Activity[]
+  tasks          Task[]
 }
 
 model Property {
-  id          String    @id @default(cuid())
-  title       String
-  address     String
-  city        String
-  postcode    String
-  price       Float
-  bedrooms    Int
-  bathrooms   Int
-  sqft        Int?
-  type        String    // detached, semi-detached, terraced, flat, bungalow
-  status      String    @default("available") // available, under-offer, sold, let, withdrawn
-  description String?
-  imageUrl    String?
-  userId      String
-  user        User      @relation(fields: [userId], references: [id])
-  deals       Deal[]
-  viewings    Viewing[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             String    @id @default(cuid())
+  title          String
+  address        String
+  city           String
+  postcode       String
+  price          Float
+  bedrooms       Int
+  bathrooms      Int
+  sqft           Int?
+  type           String    // detached, semi-detached, terraced, flat, bungalow, cottage, maisonette
+  status         String    @default("available") // available, under-offer, sstc, exchanged, completed, sold, let, withdrawn
+  description    String?
+  imageUrl       String?
+  tenure         String?   // freehold, leasehold, share-of-freehold
+  epcRating      String?   // A, B, C, D, E, F, G
+  councilTaxBand String?   // A-H
+  yearBuilt      Int?
+  parking        String?   // garage, driveway, on-street, none
+  garden         String?   // front, rear, both, none
+  heatingType    String?   // gas-central, electric, oil, none
+  keyFeatures    String?   // JSON array stored as string
+  floorplanUrl   String?
+  virtualTourUrl String?
+  portalListed   Boolean   @default(false)
+  featuredHome   Boolean   @default(false)
+  userId         String
+  user           User      @relation(fields: [userId], references: [id])
+  deals          Deal[]
+  viewings       Viewing[]
+  offers         Offer[]
+  activities     Activity[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model Client {
-  id        String    @id @default(cuid())
-  name      String
-  email     String?
-  phone     String?
-  type      String    @default("buyer") // buyer, seller, landlord, tenant
-  notes     String?
-  budget    Float?
-  userId    String
-  user      User      @relation(fields: [userId], references: [id])
-  deals     Deal[]
-  viewings  Viewing[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id               String    @id @default(cuid())
+  name             String
+  email            String?
+  phone            String?
+  type             String    @default("buyer") // buyer, seller, landlord, tenant, applicant, vendor
+  notes            String?
+  budget           Float?
+  budgetMax        Float?
+  source           String?   // rightmove, zoopla, walk-in, referral, website, social-media, phone
+  preferredContact String?   // email, phone, whatsapp
+  // Applicant search criteria
+  minBeds          Int?
+  maxPrice         Float?
+  minPrice         Float?
+  preferredAreas   String?   // comma-separated areas
+  preferredTypes   String?   // comma-separated property types
+  // Compliance
+  idVerified       Boolean   @default(false)
+  amlChecked       Boolean   @default(false)
+  gdprConsent      Boolean   @default(false)
+  consentDate      DateTime?
+  userId           String
+  user             User      @relation(fields: [userId], references: [id])
+  deals            Deal[]
+  viewings         Viewing[]
+  offers           Offer[]
+  activities       Activity[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 model Deal {
   id         String   @id @default(cuid())
-  stage      String   @default("new-lead") // new-lead, viewing-booked, offer-made, offer-accepted, under-contract, completed, fallen-through
+  stage      String   @default("new-lead")
   value      Float?
   notes      String?
+  fee        Float?   // agency fee amount
+  feePercent Float?   // agency fee percentage
+  solicitor  String?  // solicitor contact details
+  mortgage   String?  // mortgage broker details
+  targetDate DateTime? // target completion date
   propertyId String?
   property   Property? @relation(fields: [propertyId], references: [id])
   clientId   String
   client     Client   @relation(fields: [clientId], references: [id])
   userId     String
   user       User     @relation(fields: [userId], references: [id])
+  offers     Offer[]
+  activities Activity[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
@@ -80,7 +122,9 @@ model Viewing {
   date       DateTime
   time       String
   notes      String?
-  status     String   @default("scheduled") // scheduled, completed, cancelled, no-show
+  feedback   String?  // post-viewing feedback
+  rating     Int?     // 1-5 interest rating
+  status     String   @default("scheduled") // scheduled, confirmed, completed, cancelled, no-show
   propertyId String
   property   Property @relation(fields: [propertyId], references: [id])
   clientId   String
@@ -89,4 +133,54 @@ model Viewing {
   user       User     @relation(fields: [userId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+model Offer {
+  id         String    @id @default(cuid())
+  amount     Float
+  status     String    @default("pending") // pending, accepted, rejected, withdrawn, expired
+  conditions String?   // any conditions attached
+  expiresAt  DateTime?
+  notes      String?
+  propertyId String
+  property   Property  @relation(fields: [propertyId], references: [id])
+  clientId   String
+  client     Client    @relation(fields: [clientId], references: [id])
+  dealId     String?
+  deal       Deal?     @relation(fields: [dealId], references: [id])
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Activity {
+  id         String    @id @default(cuid())
+  type       String    // call, email, note, viewing, offer, status-change, task, meeting
+  title      String
+  description String?
+  propertyId String?
+  property   Property? @relation(fields: [propertyId], references: [id])
+  clientId   String?
+  client     Client?   @relation(fields: [clientId], references: [id])
+  dealId     String?
+  deal       Deal?     @relation(fields: [dealId], references: [id])
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+  createdAt  DateTime  @default(now())
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  dueDate     DateTime?
+  priority    String    @default("medium") // low, medium, high, urgent
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  category    String?   // follow-up, compliance, viewing, offer, general
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }

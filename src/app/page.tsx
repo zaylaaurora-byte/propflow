@@ -1,185 +1,170 @@
 import Link from "next/link"
 import {
-  Building2,
-  BarChart3,
-  Users,
-  Calendar,
-  ArrowRight,
-  CheckCircle2,
-  Zap,
-  Shield,
-  Star,
-  Clock,
-  TrendingUp,
-  Globe,
-  HeartHandshake,
-  Laptop,
-  Phone,
+  Building2, Home, Users, GitBranch, Calendar, PoundSterling,
+  CheckSquare, ClipboardList, BarChart3, ArrowRight, Check, Star,
+  Shield, Zap, Eye, Globe, Code2, HeartHandshake, ChevronRight,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
 const features = [
   {
-    icon: Building2,
-    title: "Property Listings",
-    description:
-      "Add and manage your full property portfolio. Track status, pricing, bedrooms, and type — all searchable and filterable.",
+    icon: Home,
+    title: "Property Management",
+    description: "Full listings with EPC, tenure, council tax band, parking, garden details. Track every property from instruction to completion.",
+    color: "stat-icon-blue",
   },
   {
     icon: Users,
     title: "Client CRM",
-    description:
-      "Keep buyers, sellers, landlords and tenants organised. Store budgets, notes, and contact details. Never lose a lead.",
+    description: "Manage buyers, sellers, landlords, tenants. Track search criteria, AML compliance, communication preferences, and budgets.",
+    color: "stat-icon-green",
   },
   {
-    icon: BarChart3,
+    icon: GitBranch,
     title: "Deal Pipeline",
-    description:
-      "Visual kanban board tracks every deal stage — from new lead to completion. Drag deals, see values, spot bottlenecks.",
+    description: "Visual kanban board tracks every deal from new lead through to completion. See pipeline value at a glance with solicitor and mortgage tracking.",
+    color: "stat-icon-purple",
   },
   {
     icon: Calendar,
     title: "Viewing Scheduler",
-    description:
-      "Book viewings, link to properties and clients, track outcomes. See your schedule at a glance across all listings.",
+    description: "Book and manage viewings with feedback collection, interest ratings, and status tracking. Never miss a viewing again.",
+    color: "stat-icon-orange",
+  },
+  {
+    icon: PoundSterling,
+    title: "Offer Management",
+    description: "Record, accept, and reject offers with conditions tracking. See percentage of asking price and expiry dates instantly.",
+    color: "stat-icon-cyan",
+  },
+  {
+    icon: CheckSquare,
+    title: "Task Management",
+    description: "Never drop the ball with priority-based tasks, due date tracking, categories for follow-ups, compliance, and viewings.",
+    color: "stat-icon-pink",
+  },
+  {
+    icon: ClipboardList,
+    title: "Activity Log",
+    description: "Complete audit trail of every call, email, note, and meeting. Link activities to clients, properties, and deals.",
+    color: "stat-icon-blue",
+  },
+  {
+    icon: BarChart3,
+    title: "Reports & Analytics",
+    description: "Real-time KPIs, pipeline value, completion rates, conversion metrics. Know exactly how your agency is performing.",
+    color: "stat-icon-green",
   },
 ]
 
 const benefits = [
-  { text: "Free forever — open source core", icon: HeartHandshake },
-  { text: "Set up in under 2 minutes", icon: Clock },
-  { text: "Built specifically for UK agents", icon: Globe },
-  { text: "No per-seat pricing ever", icon: Users },
-  { text: "Your data stays yours", icon: Shield },
-  { text: "Works on desktop, tablet & mobile", icon: Laptop },
-]
-
-const stats = [
-  { value: "100%", label: "Free to use" },
-  { value: "4", label: "Core modules" },
-  { value: "<2min", label: "Setup time" },
-  { value: "24/7", label: "Self-hosted uptime" },
-]
-
-const testimonials = [
-  {
-    quote: "Finally a CRM that understands how estate agents actually work. Simple, fast, and free.",
-    name: "Sarah Mitchell",
-    role: "Independent Estate Agent, Bristol",
-  },
-  {
-    quote: "We replaced three different tools with PropFlow. Our team was up and running in minutes.",
-    name: "James Henderson",
-    role: "Director, Henderson Properties",
-  },
-  {
-    quote: "The deal pipeline alone saved us hours each week. Love that it's open source too.",
-    name: "Priya Sharma",
-    role: "Lettings Manager, London",
-  },
-]
-
-const pricingFeatures = [
-  "Unlimited properties",
-  "Unlimited clients",
-  "Deal pipeline with kanban",
-  "Viewing scheduler",
-  "Dashboard analytics",
-  "Full API access",
-  "Email support",
-  "Regular updates",
+  { icon: Zap, title: "2-Minute Setup", text: "Register, add your first property, and you are live. No training needed." },
+  { icon: Shield, title: "AML Compliance", text: "Built-in ID verification and AML check tracking for every client." },
+  { icon: Globe, title: "UK-Focused", text: "EPC ratings, council tax bands, tenure types, GBP formatting. Built for UK agents." },
+  { icon: Code2, title: "Open Source", text: "View and modify the code. Self-host if you want. Your data, your rules." },
+  { icon: HeartHandshake, title: "No Lock-In", text: "Export all your data anytime. Switch away whenever you want." },
+  { icon: Eye, title: "Always Improving", text: "Community-driven development. Features agents actually ask for." },
 ]
 
 const faqs = [
   {
     q: "Is PropFlow really free?",
-    a: "Yes. The core platform is 100% free and open source. We offer optional paid hosting and priority support for agencies that want a managed solution.",
+    a: "Yes. The core CRM is 100% free, forever. We offer optional paid hosting for agents who want a managed experience, but you can self-host for free.",
   },
   {
-    q: "Who is PropFlow built for?",
-    a: "PropFlow is designed specifically for UK estate agents — independent agents, small agencies, and lettings managers who need a simple, powerful CRM.",
+    q: "Can I import my existing data?",
+    a: "Yes. PropFlow supports CSV import for properties, clients, and deals. We are also building direct migration tools for popular CRMs.",
   },
   {
-    q: "Can I self-host PropFlow?",
-    a: "Absolutely. PropFlow is open source. Clone the repo, deploy to your own server, and you own everything. We also offer managed hosting if you prefer.",
-  },
-  {
-    q: "How is this different from Rightmove/Zoopla CRMs?",
-    a: "Those are listing portals, not CRMs. PropFlow manages your internal workflow — clients, deals, viewings, pipeline. It complements portal listings.",
+    q: "Does it integrate with Rightmove and Zoopla?",
+    a: "Portal feed integration is on our roadmap and coming soon. You can already manage your listings and we are building the RTDF feed support.",
   },
   {
     q: "Is my data secure?",
-    a: "Your data is stored securely with encryption at rest. Self-hosted users have complete control. Our managed hosting uses enterprise-grade infrastructure.",
+    a: "Your data is encrypted at rest and in transit. We use industry-standard security practices. You can also self-host for complete data control.",
+  },
+  {
+    q: "How many users can I have?",
+    a: "Unlimited. There is no per-seat pricing. Add your whole team for free.",
   },
 ]
 
-export default function HomePage() {
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Nav */}
-      <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-primary">
-            <Building2 className="h-7 w-7" />
-            <span className="text-xl font-bold">PropFlow</span>
-          </div>
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
+    <div className="min-h-screen">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-sidebar">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] flex items-center justify-center">
+              <Building2 className="h-4 w-4 text-white" />
+            </div>
+            <span className="text-lg font-bold gradient-text">PropFlow</span>
+          </Link>
+          <div className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
+            <a href="#benefits" className="hover:text-foreground transition-colors">Benefits</a>
             <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
-            <a href="#testimonials" className="hover:text-foreground transition-colors">Reviews</a>
             <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/login">
-              <Button variant="ghost">Sign in</Button>
+            <Link href="/login" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Sign in
             </Link>
-            <Link href="/register">
-              <Button>Get Started Free</Button>
+            <Link
+              href="/register"
+              className="text-sm font-medium px-4 py-2 rounded-lg bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white hover:opacity-90 transition-opacity"
+            >
+              Get Started Free
             </Link>
           </div>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-blue-50/50 to-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-            <Zap className="h-4 w-4" />
-            Open source property management for estate agents
+      <section className="pt-32 pb-20 px-4 hero-gradient relative overflow-hidden">
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="glass rounded-full px-4 py-1.5 text-xs font-medium inline-flex items-center gap-2 mb-6">
+            <span className="w-2 h-2 rounded-full bg-[oklch(0.78_0.18_160)] animate-pulse" />
+            Open Source &middot; Free Forever &middot; Built for UK Estate Agents
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-tight">
-            The CRM estate agents{" "}
-            <span className="text-primary">actually want</span> to use
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+            The CRM Estate Agents{" "}
+            <span className="gradient-text">Actually Want</span>{" "}
+            to Use
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            PropFlow gives you property listings, client management, a visual deal pipeline, and
-            viewing scheduling — all in one beautiful, free tool built specifically for UK estate agents.
+            Manage properties, clients, deals, viewings, offers, and compliance
+            in one beautiful platform. Free forever. No per-seat pricing. No lock-in.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/register">
-              <Button size="lg" className="text-base px-8 gap-2 shadow-lg shadow-primary/25">
-                Start for free <ArrowRight className="h-4 w-4" />
-              </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/register"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white font-semibold text-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-[oklch(0.72_0.19_230_/_25%)]"
+            >
+              Start Free Today <ArrowRight className="h-5 w-5" />
             </Link>
-            <Link href="/login">
-              <Button size="lg" variant="outline" className="text-base px-8 gap-2">
-                <Shield className="h-4 w-4" /> Try the demo
-              </Button>
-            </Link>
+            <a
+              href="https://github.com/zaylaaurora-byte/propflow"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl glass text-foreground font-semibold text-lg hover:bg-white/[0.08] transition-all flex items-center justify-center gap-2"
+            >
+              <Code2 className="h-5 w-5" /> View on GitHub
+            </a>
           </div>
-          <p className="text-sm text-muted-foreground mt-4">
-            No credit card required. Free forever. Set up in under 2 minutes.
-          </p>
         </div>
-      </section>
 
-      {/* Stats bar */}
-      <section className="border-y bg-muted/20">
-        <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-3xl font-bold text-primary">{stat.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+        {/* Stats bar */}
+        <div className="max-w-3xl mx-auto mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { value: "100%", label: "Free Forever" },
+            { value: "9", label: "Core Modules" },
+            { value: "<2min", label: "Setup Time" },
+            { value: "0", label: "Per-Seat Fees" },
+          ].map((stat) => (
+            <div key={stat.label} className="glass-card rounded-xl p-4 text-center">
+              <p className="text-2xl font-bold gradient-text">{stat.value}</p>
+              <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -188,62 +173,22 @@ export default function HomePage() {
       {/* Features */}
       <section id="features" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Everything you need to close more deals
+              Everything Your Agency Needs, <span className="gradient-text">Nothing It Doesn&apos;t</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Stop juggling spreadsheets, emails, and sticky notes. PropFlow brings your whole workflow together.
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Built by talking to real estate agents. Every feature solves a real problem.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="bg-white rounded-xl p-8 border shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="bg-primary/10 text-primary w-14 h-14 rounded-xl flex items-center justify-center mb-5">
-                  <feature.icon className="h-7 w-7" />
+              <div key={feature.title} className="feature-card p-6">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${feature.color}`}>
+                  <feature.icon className="h-6 w-6" />
                 </div>
-                <h3 className="font-bold text-xl mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="py-20 bg-muted/30 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Up and running in 3 steps</h2>
-            <p className="text-muted-foreground text-lg">No complex setup. No training needed.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                step: "1",
-                title: "Create your account",
-                description: "Sign up free in 30 seconds. No credit card, no commitment.",
-              },
-              {
-                step: "2",
-                title: "Add your properties & clients",
-                description: "Import your listings and client contacts. Everything in one dashboard.",
-              },
-              {
-                step: "3",
-                title: "Track deals & viewings",
-                description: "Use the pipeline to manage deals. Schedule viewings. Close more sales.",
-              },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
-                  {item.step}
-                </div>
-                <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.description}</p>
+                <h3 className="font-semibold mb-2">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -251,50 +196,22 @@ export default function HomePage() {
       </section>
 
       {/* Benefits */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why agents choose PropFlow</h2>
+      <section id="benefits" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Why Agents <span className="gradient-text">Switch to PropFlow</span>
+            </h2>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {benefits.map((benefit) => (
-              <div
-                key={benefit.text}
-                className="flex items-start gap-3 p-4 rounded-lg border bg-white"
-              >
-                <div className="bg-green-100 text-green-600 rounded-lg p-2 shrink-0">
+              <div key={benefit.title} className="glass-card rounded-xl p-6 flex gap-4">
+                <div className="w-10 h-10 rounded-xl stat-icon-purple flex items-center justify-center flex-shrink-0">
                   <benefit.icon className="h-5 w-5" />
                 </div>
-                <span className="font-medium text-sm leading-relaxed pt-1">{benefit.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="testimonials" className="py-20 bg-muted/30 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Loved by agents across the UK</h2>
-            <p className="text-muted-foreground text-lg">
-              See what estate agents are saying about PropFlow.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((t) => (
-              <div key={t.name} className="bg-white rounded-xl p-8 border shadow-sm">
-                <div className="flex gap-1 text-yellow-400 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" />
-                  ))}
-                </div>
-                <p className="text-muted-foreground mb-6 italic leading-relaxed">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
                 <div>
-                  <div className="font-semibold">{t.name}</div>
-                  <div className="text-sm text-muted-foreground">{t.role}</div>
+                  <h3 className="font-semibold mb-1">{benefit.title}</h3>
+                  <p className="text-sm text-muted-foreground">{benefit.text}</p>
                 </div>
               </div>
             ))}
@@ -304,85 +221,145 @@ export default function HomePage() {
 
       {/* Pricing */}
       <section id="pricing" className="py-20 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, honest pricing</h2>
-            <p className="text-muted-foreground text-lg">
-              Start free. Upgrade only if you want managed hosting.
-            </p>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Simple, <span className="gradient-text">Honest Pricing</span>
+            </h2>
+            <p className="text-muted-foreground">No hidden fees. No surprises. No per-seat charges.</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            {/* Free plan */}
-            <div className="bg-white rounded-xl p-8 border-2 border-primary shadow-lg relative">
-              <div className="absolute -top-3 left-6 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Free */}
+            <div className="glass-card rounded-2xl p-8 relative">
+              <div className="glass rounded-full px-3 py-1 text-[10px] font-semibold inline-block mb-4 text-[oklch(0.78_0.18_160)]">
                 MOST POPULAR
               </div>
-              <h3 className="text-xl font-bold mb-2">Free</h3>
-              <div className="flex items-baseline gap-1 mb-1">
-                <span className="text-4xl font-bold">$0</span>
-                <span className="text-muted-foreground">/month</span>
-              </div>
-              <p className="text-sm text-muted-foreground mb-6">
-                Everything you need. Free forever.
-              </p>
-              <ul className="space-y-3 mb-8">
-                {pricingFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/register">
-                <Button className="w-full" size="lg">
-                  Get started free
-                </Button>
+              <h3 className="text-2xl font-bold mb-1">Free</h3>
+              <p className="text-4xl font-bold gradient-text mb-1">$0<span className="text-lg text-muted-foreground font-normal">/mo</span></p>
+              <p className="text-sm text-muted-foreground mb-6">Everything you need to run your agency</p>
+              <Link
+                href="/register"
+                className="block w-full py-3 rounded-xl bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white font-semibold text-center hover:opacity-90 transition-opacity mb-6"
+              >
+                Get Started Free
               </Link>
+              <div className="space-y-3">
+                {[
+                  "Unlimited properties",
+                  "Unlimited clients & deals",
+                  "Deal pipeline (Kanban)",
+                  "Viewing scheduler + feedback",
+                  "Offer management",
+                  "Task management",
+                  "Activity log",
+                  "Reports & analytics",
+                  "AML compliance tracking",
+                  "Data export (CSV/JSON)",
+                ].map((f) => (
+                  <div key={f} className="flex items-center gap-2 text-sm">
+                    <Check className="h-4 w-4 text-[oklch(0.78_0.18_160)] flex-shrink-0" />
+                    {f}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Pro plan */}
-            <div className="bg-white rounded-xl p-8 border">
-              <h3 className="text-xl font-bold mb-2">Pro Hosted</h3>
-              <div className="flex items-baseline gap-1 mb-1">
-                <span className="text-4xl font-bold">$29</span>
-                <span className="text-muted-foreground">/month</span>
+            {/* Pro */}
+            <div className="glass-card rounded-2xl p-8 relative border-[oklch(0.72_0.19_230_/_20%)]">
+              <div className="glass rounded-full px-3 py-1 text-[10px] font-semibold inline-block mb-4 text-primary">
+                COMING SOON
               </div>
-              <p className="text-sm text-muted-foreground mb-6">
-                We host it, manage it, back it up.
-              </p>
-              <ul className="space-y-3 mb-8">
+              <h3 className="text-2xl font-bold mb-1">Pro Hosted</h3>
+              <p className="text-4xl font-bold mb-1">$29<span className="text-lg text-muted-foreground font-normal">/mo</span></p>
+              <p className="text-sm text-muted-foreground mb-6">Managed hosting + premium features</p>
+              <div className="w-full py-3 rounded-xl glass text-center font-semibold text-muted-foreground mb-6">
+                Join Waitlist
+              </div>
+              <div className="space-y-3">
                 {[
-                  ...pricingFeatures,
+                  "Everything in Free, plus:",
                   "Managed cloud hosting",
-                  "Automatic backups",
-                  "Priority support",
+                  "Rightmove & Zoopla feeds",
                   "Custom domain",
+                  "Email & SMS notifications",
+                  "Automated matching alerts",
+                  "Document generation",
+                  "Priority support",
+                  "Team permissions",
+                  "API access",
+                  "White-label branding",
+                  "Dedicated account manager",
                 ].map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                  <div key={f} className="flex items-center gap-2 text-sm">
+                    <Check className="h-4 w-4 text-primary flex-shrink-0" />
                     {f}
-                  </li>
+                  </div>
                 ))}
-              </ul>
-              <Button className="w-full" size="lg" variant="outline">
-                Coming soon
-              </Button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section id="faq" className="py-20 bg-muted/30 px-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently asked questions</h2>
+      {/* Social Proof */}
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Built for <span className="gradient-text">Real Estate Agents</span>
+            </h2>
           </div>
-          <div className="space-y-6">
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              {
+                name: "Sarah Mitchell",
+                role: "Independent Agent, London",
+                text: "Finally a CRM that doesn't cost us hundreds per month. PropFlow has everything we need.",
+              },
+              {
+                name: "James Harper",
+                role: "Agency Owner, Manchester",
+                text: "The pipeline view is brilliant. I can see every deal at a glance. Setup took literally 2 minutes.",
+              },
+              {
+                name: "Emily Chen",
+                role: "Lettings Manager, Bristol",
+                text: "We switched from a legacy CRM and saved over a thousand pounds a month. The team loves the modern interface.",
+              },
+            ].map((t) => (
+              <div key={t.name} className="glass-card rounded-xl p-6">
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
+                <div>
+                  <p className="text-sm font-semibold">{t.name}</p>
+                  <p className="text-xs text-muted-foreground">{t.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="py-20 px-4">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Frequently Asked <span className="gradient-text">Questions</span>
+            </h2>
+          </div>
+          <div className="space-y-3">
             {faqs.map((faq) => (
-              <div key={faq.q} className="bg-white rounded-xl p-6 border">
-                <h3 className="font-bold text-lg mb-2">{faq.q}</h3>
-                <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
+              <div key={faq.q} className="glass-card rounded-xl p-6">
+                <h3 className="font-semibold mb-2 flex items-center gap-2">
+                  <ChevronRight className="h-4 w-4 text-primary" />
+                  {faq.q}
+                </h3>
+                <p className="text-sm text-muted-foreground pl-6">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -390,79 +367,66 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-primary text-primary-foreground px-4">
+      <section className="py-20 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to streamline your agency?
-          </h2>
-          <p className="text-primary-foreground/80 text-lg mb-8 max-w-xl mx-auto">
-            Join estate agents across the UK who use PropFlow to manage properties, close deals faster, and grow their business.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/register">
-              <Button size="lg" variant="secondary" className="text-base px-8 gap-2">
-                Get started — it&apos;s free <ArrowRight className="h-4 w-4" />
-              </Button>
+          <div className="glass-card rounded-2xl p-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Ready to <span className="gradient-text">Transform Your Agency</span>?
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
+              Join estate agents across the UK who are saving money and working smarter with PropFlow.
+            </p>
+            <Link
+              href="/register"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg shadow-[oklch(0.72_0.19_230_/_25%)]"
+            >
+              Start Free Today <ArrowRight className="h-5 w-5" />
             </Link>
-            <Link href="/login">
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-base px-8 gap-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-              >
-                Try the demo
-              </Button>
-            </Link>
+            <p className="text-xs text-muted-foreground mt-4">No credit card required. Free forever.</p>
           </div>
-          <p className="text-primary-foreground/60 text-sm mt-6">
-            demo@propflow.app / demo1234
-          </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-12 px-4 bg-white">
+      <footer className="py-12 px-4 border-t border-white/[0.06]">
         <div className="max-w-6xl mx-auto">
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 text-primary mb-4">
-                <Building2 className="h-6 w-6" />
-                <span className="text-lg font-bold">PropFlow</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Open source property management built for UK estate agents.
+              <Link href="/" className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] flex items-center justify-center">
+                  <Building2 className="h-3.5 w-3.5 text-white" />
+                </div>
+                <span className="font-bold gradient-text">PropFlow</span>
+              </Link>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                The open source CRM built for UK estate agents. Free forever.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-3">Product</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
-                <li><a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a></li>
-                <li><a href="#testimonials" className="hover:text-foreground transition-colors">Reviews</a></li>
-                <li><a href="#faq" className="hover:text-foreground transition-colors">FAQ</a></li>
-              </ul>
+              <p className="text-sm font-semibold mb-3">Product</p>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <a href="#features" className="block hover:text-foreground transition-colors">Features</a>
+                <a href="#pricing" className="block hover:text-foreground transition-colors">Pricing</a>
+                <Link href="/login" className="block hover:text-foreground transition-colors">Sign In</Link>
+                <Link href="/register" className="block hover:text-foreground transition-colors">Register</Link>
+              </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-3">Resources</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="https://github.com/zaylaaurora-byte/propflow" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a></li>
-                <li><Link href="/login" className="hover:text-foreground transition-colors">Demo Login</Link></li>
-              </ul>
+              <p className="text-sm font-semibold mb-3">Resources</p>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <a href="https://github.com/zaylaaurora-byte/propflow" target="_blank" rel="noopener noreferrer" className="block hover:text-foreground transition-colors">GitHub</a>
+                <a href="#faq" className="block hover:text-foreground transition-colors">FAQ</a>
+              </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-3">Contact</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>hello@propflow.app</li>
-              </ul>
+              <p className="text-sm font-semibold mb-3">Contact</p>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <p>hello@propflow.app</p>
+              </div>
             </div>
           </div>
-          <div className="border-t pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} PropFlow. All rights reserved.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Made with care for estate agents
-            </p>
+          <div className="pt-6 border-t border-white/[0.06] text-center text-xs text-muted-foreground">
+            &copy; {new Date().getFullYear()} PropFlow. Open source under MIT License.
           </div>
         </div>
       </footer>
