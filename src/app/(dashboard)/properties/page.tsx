@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Plus, Search, Home, Pencil, Trash2 } from "lucide-react"
 import { formatCurrency } from "@/lib/utils"
 
@@ -114,10 +114,10 @@ export default function PropertiesPage() {
           <h1 className="text-2xl font-bold">Properties</h1>
           <p className="text-muted-foreground">{properties.length} total listings</p>
         </div>
+        <Button className="gap-2" onClick={() => setDialogOpen(true)}>
+          <Plus className="h-4 w-4" /> Add Property
+        </Button>
         <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) setEditing(null); }}>
-          <DialogTrigger render={<Button className="gap-2" />}>
-            <Plus className="h-4 w-4" /> Add Property
-          </DialogTrigger>
           <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editing ? "Edit Property" : "Add New Property"}</DialogTitle>
@@ -248,7 +248,7 @@ export default function PropertiesPage() {
                   {property.sqft && <span>{property.sqft} sqft</span>}
                   <span className="capitalize">{property.type}</span>
                 </div>
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex gap-2">
                   <Button
                     size="sm"
                     variant="outline"

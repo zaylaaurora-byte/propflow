@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Plus, GitBranch, GripVertical } from "lucide-react"
 import { formatCurrency } from "@/lib/utils"
 
@@ -117,10 +117,10 @@ export default function PipelinePage() {
           <h1 className="text-2xl font-bold">Deal Pipeline</h1>
           <p className="text-muted-foreground">{deals.length} deals in pipeline</p>
         </div>
+        <Button className="gap-2" disabled={clients.length === 0} onClick={() => setDialogOpen(true)}>
+          <Plus className="h-4 w-4" /> Add Deal
+        </Button>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger render={<Button className="gap-2" disabled={clients.length === 0} />}>
-            <Plus className="h-4 w-4" /> Add Deal
-          </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Add New Deal</DialogTitle>

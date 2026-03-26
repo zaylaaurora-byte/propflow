@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Plus, Search, Users, Pencil, Trash2, Mail, Phone } from "lucide-react"
 import { formatCurrency, formatDate } from "@/lib/utils"
@@ -101,10 +101,10 @@ export default function ClientsPage() {
           <h1 className="text-2xl font-bold">Clients</h1>
           <p className="text-muted-foreground">{clients.length} contacts</p>
         </div>
+        <Button className="gap-2" onClick={() => setDialogOpen(true)}>
+          <Plus className="h-4 w-4" /> Add Client
+        </Button>
         <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) setEditing(null); }}>
-          <DialogTrigger render={<Button className="gap-2" />}>
-            <Plus className="h-4 w-4" /> Add Client
-          </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{editing ? "Edit Client" : "Add New Client"}</DialogTitle>
