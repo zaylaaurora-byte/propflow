@@ -1,12 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Plus, GitBranch, GripVertical, Calendar, Briefcase, TrendingUp, ChevronRight, Trash2 } from "lucide-react"
+import { Plus, GitBranch, GripVertical, Calendar, Briefcase, TrendingUp, ChevronRight, Trash2, Sparkles } from "lucide-react"
 import { formatCurrency } from "@/lib/utils"
 
 interface Deal {
@@ -36,13 +35,13 @@ interface Property {
 }
 
 const stages = [
-  { id: "new-lead", label: "New Lead", color: "bg-gray-500", borderColor: "border-l-gray-400", dotColor: "bg-gray-400", textColor: "text-gray-400" },
-  { id: "viewing-booked", label: "Viewing Booked", color: "bg-blue-500", borderColor: "border-l-blue-500", dotColor: "bg-blue-500", textColor: "text-blue-400" },
-  { id: "offer-made", label: "Offer Made", color: "bg-yellow-500", borderColor: "border-l-yellow-500", dotColor: "bg-yellow-500", textColor: "text-yellow-400" },
-  { id: "offer-accepted", label: "Offer Accepted", color: "bg-orange-500", borderColor: "border-l-orange-500", dotColor: "bg-orange-500", textColor: "text-orange-400" },
-  { id: "under-contract", label: "Under Contract", color: "bg-purple-500", borderColor: "border-l-purple-500", dotColor: "bg-purple-500", textColor: "text-purple-400" },
-  { id: "completed", label: "Completed", color: "bg-green-500", borderColor: "border-l-green-500", dotColor: "bg-green-500", textColor: "text-green-400" },
-  { id: "fallen-through", label: "Fallen Through", color: "bg-red-500", borderColor: "border-l-red-500", dotColor: "bg-red-500", textColor: "text-red-400" },
+  { id: "new-lead", label: "New Lead", color: "bg-gray-500", borderColor: "border-l-gray-400", dotColor: "bg-gray-400", textColor: "text-gray-400", glowColor: "shadow-gray-500/20" },
+  { id: "viewing-booked", label: "Viewing Booked", color: "bg-blue-500", borderColor: "border-l-blue-500", dotColor: "bg-blue-500", textColor: "text-blue-400", glowColor: "shadow-blue-500/20" },
+  { id: "offer-made", label: "Offer Made", color: "bg-yellow-500", borderColor: "border-l-yellow-500", dotColor: "bg-yellow-500", textColor: "text-yellow-400", glowColor: "shadow-yellow-500/20" },
+  { id: "offer-accepted", label: "Offer Accepted", color: "bg-orange-500", borderColor: "border-l-orange-500", dotColor: "bg-orange-500", textColor: "text-orange-400", glowColor: "shadow-orange-500/20" },
+  { id: "under-contract", label: "Under Contract", color: "bg-purple-500", borderColor: "border-l-purple-500", dotColor: "bg-purple-500", textColor: "text-purple-400", glowColor: "shadow-purple-500/20" },
+  { id: "completed", label: "Completed", color: "bg-green-500", borderColor: "border-l-green-500", dotColor: "bg-green-500", textColor: "text-green-400", glowColor: "shadow-green-500/20" },
+  { id: "fallen-through", label: "Fallen Through", color: "bg-red-500", borderColor: "border-l-red-500", dotColor: "bg-red-500", textColor: "text-red-400", glowColor: "shadow-red-500/20" },
 ]
 
 export default function PipelinePage() {
@@ -138,7 +137,7 @@ export default function PipelinePage() {
               <GitBranch className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold gradient-text">Deal Pipeline</h1>
+              <h1 className="text-3xl font-bold gradient-text">Deal Pipeline</h1>
               <p className="text-sm text-white/50">{deals.length} active deals</p>
             </div>
           </div>
@@ -146,37 +145,37 @@ export default function PipelinePage() {
         <div className="flex items-center gap-4">
           {/* Summary Stats */}
           <div className="hidden md:flex items-center gap-4">
-            <div className="glass-card rounded-xl px-4 py-2.5 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg stat-icon-green flex items-center justify-center">
-                <TrendingUp className="h-4 w-4" />
+            <div className="glass-card rounded-xl px-5 py-3 flex items-center gap-3 shadow-lg shadow-green-500/10 border border-green-500/10">
+              <div className="w-10 h-10 rounded-lg stat-icon-green flex items-center justify-center">
+                <TrendingUp className="h-5 w-5" />
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/40 font-medium">Pipeline Value</p>
-                <p className="text-sm font-bold text-white/90">{formatCurrency(totalValue)}</p>
+                <p className="text-lg font-bold gradient-text">{formatCurrency(totalValue)}</p>
               </div>
             </div>
-            <div className="glass-card rounded-xl px-4 py-2.5 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg stat-icon-blue flex items-center justify-center">
-                <Briefcase className="h-4 w-4" />
+            <div className="glass-card rounded-xl px-5 py-3 flex items-center gap-3 shadow-lg shadow-blue-500/10 border border-blue-500/10">
+              <div className="w-10 h-10 rounded-lg stat-icon-blue flex items-center justify-center">
+                <Briefcase className="h-5 w-5" />
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/40 font-medium">Total Fees</p>
-                <p className="text-sm font-bold text-white/90">{formatCurrency(totalFees)}</p>
+                <p className="text-lg font-bold gradient-text">{formatCurrency(totalFees)}</p>
               </div>
             </div>
           </div>
-          <Button
-            className="gap-2 glass-card border-white/10 hover:bg-white/10 text-white"
+          <button
+            className="btn-gradient rounded-xl px-5 py-2.5 text-sm font-semibold flex items-center gap-2"
             disabled={clients.length === 0}
             onClick={() => setDialogOpen(true)}
           >
             <Plus className="h-4 w-4" /> Add Deal
-          </Button>
+          </button>
         </div>
 
         {/* Add Deal Dialog */}
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent className="glass-dialog border-white/10 text-white sm:max-w-lg">
+          <DialogContent className="glass-dialog border-white/[0.08] text-white sm:max-w-lg">
             <DialogHeader>
               <DialogTitle className="text-lg font-semibold gradient-text">Add New Deal</DialogTitle>
               <p className="text-sm text-white/40">Create a new deal in your pipeline</p>
@@ -184,7 +183,7 @@ export default function PipelinePage() {
             <form onSubmit={handleSubmit} className="space-y-4 mt-2">
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label htmlFor="clientId" className="text-white/70 text-xs font-medium">Client *</Label>
+                  <Label htmlFor="clientId" className="text-sm font-medium text-white/80">Client *</Label>
                   <select name="clientId" required className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                     <option value="">Select a client...</option>
                     {clients.map((c) => (
@@ -193,7 +192,7 @@ export default function PipelinePage() {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="propertyId" className="text-white/70 text-xs font-medium">Property</Label>
+                  <Label htmlFor="propertyId" className="text-sm font-medium text-white/80">Property</Label>
                   <select name="propertyId" className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                     <option value="">No property linked</option>
                     {properties.map((p) => (
@@ -204,7 +203,7 @@ export default function PipelinePage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label htmlFor="stage" className="text-white/70 text-xs font-medium">Stage</Label>
+                  <Label htmlFor="stage" className="text-sm font-medium text-white/80">Stage</Label>
                   <select name="stage" defaultValue="new-lead" className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                     {stages.map((s) => (
                       <option key={s.id} value={s.id}>{s.label}</option>
@@ -212,45 +211,47 @@ export default function PipelinePage() {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="value" className="text-white/70 text-xs font-medium">Deal Value</Label>
+                  <Label htmlFor="value" className="text-sm font-medium text-white/80">Deal Value</Label>
                   <Input id="value" name="value" type="number" placeholder="250000" className="glass-input border-white/10 text-white placeholder:text-white/30" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label htmlFor="fee" className="text-white/70 text-xs font-medium">Agency Fee</Label>
+                  <Label htmlFor="fee" className="text-sm font-medium text-white/80">Agency Fee</Label>
                   <Input id="fee" name="fee" type="number" step="0.01" placeholder="3750" className="glass-input border-white/10 text-white placeholder:text-white/30" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="feePercent" className="text-white/70 text-xs font-medium">Fee %</Label>
+                  <Label htmlFor="feePercent" className="text-sm font-medium text-white/80">Fee %</Label>
                   <Input id="feePercent" name="feePercent" type="number" step="0.01" placeholder="1.5" className="glass-input border-white/10 text-white placeholder:text-white/30" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label htmlFor="solicitor" className="text-white/70 text-xs font-medium">Solicitor</Label>
+                  <Label htmlFor="solicitor" className="text-sm font-medium text-white/80">Solicitor</Label>
                   <Input id="solicitor" name="solicitor" type="text" placeholder="Smith & Co." className="glass-input border-white/10 text-white placeholder:text-white/30" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="mortgage" className="text-white/70 text-xs font-medium">Mortgage Broker</Label>
+                  <Label htmlFor="mortgage" className="text-sm font-medium text-white/80">Mortgage Broker</Label>
                   <Input id="mortgage" name="mortgage" type="text" placeholder="Broker name" className="glass-input border-white/10 text-white placeholder:text-white/30" />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="targetDate" className="text-white/70 text-xs font-medium">Target Completion Date</Label>
+                <Label htmlFor="targetDate" className="text-sm font-medium text-white/80">Target Completion Date</Label>
                 <Input id="targetDate" name="targetDate" type="date" className="glass-input border-white/10 text-white placeholder:text-white/30" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="notes" className="text-white/70 text-xs font-medium">Notes</Label>
+                <Label htmlFor="notes" className="text-sm font-medium text-white/80">Notes</Label>
                 <Textarea id="notes" name="notes" rows={2} placeholder="Any additional details..." className="glass-input border-white/10 text-white placeholder:text-white/30 resize-none" />
               </div>
-              <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 shadow-lg shadow-blue-500/20">
+              <button type="submit" className="w-full btn-gradient rounded-xl px-5 py-2.5 text-sm font-semibold">
                 Create Deal
-              </Button>
+              </button>
             </form>
           </DialogContent>
         </Dialog>
       </div>
+
+      <div className="neon-line mt-4" />
 
       {clients.length === 0 && (
         <div className="glass-card rounded-xl p-8 text-center">
@@ -269,15 +270,18 @@ export default function PipelinePage() {
           const stageFees = stageDeals.reduce((sum, d) => sum + (d.fee || 0), 0)
           return (
             <div key={stage.id} className="min-w-[300px] flex-shrink-0">
-              <div className={`pipeline-column p-4 border-l-2 ${stage.borderColor}`}>
+              <div className={`pipeline-column p-4 border-l-2 ${stage.borderColor} shadow-lg ${stage.glowColor} rounded-xl`}>
+                {/* Colored glow bar at the top */}
+                <div className={`h-1 w-full rounded-full ${stage.color} opacity-40 mb-4 shadow-lg ${stage.glowColor}`} />
+
                 {/* Column Header */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2.5">
-                      <div className={`w-2.5 h-2.5 rounded-full ${stage.dotColor} shadow-sm`} />
-                      <h3 className="text-sm font-semibold text-white/90">{stage.label}</h3>
+                      <div className={`w-3 h-3 rounded-full ${stage.dotColor} shadow-md ${stage.glowColor}`} />
+                      <h3 className="text-base font-semibold text-white/90">{stage.label}</h3>
                     </div>
-                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50">
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-white/[0.08] text-white/60">
                       {stageDeals.length}
                     </span>
                   </div>
@@ -318,7 +322,7 @@ export default function PipelinePage() {
                         {/* Value & Fee */}
                         <div className="flex items-center gap-2 mb-1.5">
                           {deal.value && (
-                            <span className="text-sm font-bold gradient-text">{formatCurrency(deal.value)}</span>
+                            <span className="text-sm gradient-text font-bold">{formatCurrency(deal.value)}</span>
                           )}
                           {deal.fee && (
                             <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20">
@@ -363,7 +367,7 @@ export default function PipelinePage() {
                           {prevStage && (
                             <button
                               onClick={() => moveDeal(deal.id, prevStage.id)}
-                              className="flex items-center gap-1 text-[11px] px-2 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-white/50 hover:bg-white/[0.08] hover:text-white/70 hover:border-white/[0.15] transition-all backdrop-blur-sm"
+                              className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/50 hover:bg-white/[0.12] hover:text-white/80 hover:border-white/[0.2] transition-all backdrop-blur-sm"
                             >
                               <ChevronRight className="h-3 w-3 rotate-180" />
                               {prevStage.label}
@@ -372,7 +376,7 @@ export default function PipelinePage() {
                           {nextStage && (
                             <button
                               onClick={() => moveDeal(deal.id, nextStage.id)}
-                              className="flex items-center gap-1 text-[11px] px-2 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-white/50 hover:bg-white/[0.08] hover:text-white/70 hover:border-white/[0.15] transition-all backdrop-blur-sm"
+                              className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/50 hover:bg-white/[0.12] hover:text-white/80 hover:border-white/[0.2] transition-all backdrop-blur-sm"
                             >
                               {nextStage.label}
                               <ChevronRight className="h-3 w-3" />
@@ -380,7 +384,7 @@ export default function PipelinePage() {
                           )}
                           <button
                             onClick={() => deleteDeal(deal.id)}
-                            className="flex items-center gap-1 text-[11px] px-2 py-1 rounded-md bg-red-500/[0.06] border border-red-500/[0.15] text-red-400/70 hover:bg-red-500/[0.15] hover:text-red-400 hover:border-red-500/30 transition-all ml-auto backdrop-blur-sm"
+                            className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg bg-red-500/[0.06] border border-red-500/[0.15] text-red-400/70 hover:bg-red-500/[0.15] hover:text-red-400 hover:border-red-500/30 transition-all ml-auto backdrop-blur-sm"
                           >
                             <Trash2 className="h-3 w-3" />
                           </button>
@@ -389,9 +393,10 @@ export default function PipelinePage() {
                     )
                   })}
                   {stageDeals.length === 0 && (
-                    <div className="flex flex-col items-center justify-center h-32 text-white/20">
-                      <div className={`w-8 h-8 rounded-full ${stage.dotColor} opacity-20 mb-2`} />
-                      <span className="text-xs">No deals</span>
+                    <div className="flex flex-col items-center justify-center h-40 text-white/20 rounded-xl border border-dashed border-white/[0.06] bg-white/[0.01]">
+                      <div className={`w-10 h-10 rounded-full ${stage.dotColor} opacity-15 mb-3 shadow-lg ${stage.glowColor}`} />
+                      <span className="text-xs font-medium text-white/25">No deals yet</span>
+                      <span className="text-[10px] text-white/15 mt-0.5">Drag or add a deal here</span>
                     </div>
                   )}
                 </div>

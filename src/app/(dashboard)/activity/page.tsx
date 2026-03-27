@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -95,20 +95,51 @@ export default function ActivityPage() {
     return acc
   }, {})
 
+  // Activity type count summary
+  const typeCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    filtered.forEach((a) => {
+      const label = typeConfig[a.type]?.label || a.type
+      counts[label] = (counts[label] || 0) + 1
+    })
+    return counts
+  }, [filtered])
+
+  const summaryText = Object.entries(typeCounts)
+    .map(([label, count]) => `${count} ${label}${count !== 1 ? "s" : ""}`)
+    .join(", ")
+
   return (
     <div className="space-y-6">
+      {/* Page Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Activity Log</h1>
-          <p className="text-muted-foreground">Track all communications and actions</p>
+        <div className="flex items-center gap-4">
+          <div className="page-header-icon stat-icon-green">
+            <ClipboardList className="h-6 w-6" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold gradient-text">Activity Log</h1>
+            <p className="text-muted-foreground">Track all communications and actions</p>
+          </div>
         </div>
-        <Button
-          className="gap-2 bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white border-0 hover:opacity-90"
+        <button
+          className="btn-gradient rounded-xl px-5 py-2.5 text-sm font-semibold flex items-center gap-2"
           onClick={() => setDialogOpen(true)}
         >
           <Plus className="h-4 w-4" /> Log Activity
-        </Button>
+        </button>
       </div>
+      <div className="neon-line mt-4" />
+
+      {/* Activity Type Summary Bar */}
+      {!loading && filtered.length > 0 && (
+        <div className="glass-card rounded-xl px-5 py-3 flex items-center gap-3">
+          <span className="text-xs font-semibold text-white/50 uppercase tracking-wider">Summary</span>
+          <span className="w-px h-4 bg-white/10" />
+          <span className="text-sm text-white/70">{summaryText}</span>
+          <span className="ml-auto text-xs text-white/40">{filtered.length} total</span>
+        </div>
+      )}
 
       {/* Filters */}
       <div className="flex gap-3">
@@ -139,42 +170,60 @@ export default function ActivityPage() {
           </p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-8">
           {Object.entries(grouped).map(([date, items]) => (
             <div key={date}>
-              <h3 className="text-sm font-medium text-muted-foreground mb-3 px-1">{date}</h3>
-              <div className="space-y-2">
-                {items.map((activity) => {
-                  const config = typeConfig[activity.type] || typeConfig.note
-                  const Icon = config.icon
-                  return (
-                    <div key={activity.id} className="glass-card rounded-xl p-4 flex items-start gap-4">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${config.color}`}>
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <p className="font-medium text-sm">{activity.title}</p>
-                          <span className="text-[10px] glass rounded-full px-2 py-0.5 text-muted-foreground">
-                            {config.label}
-                          </span>
+              <h3 className="text-base font-semibold text-white/90 mb-4 px-1 pb-2 border-b border-white/[0.06]">{date}</h3>
+              {/* Timeline container with vertical connecting line */}
+              <div className="relative pl-6">
+                {/* Vertical gradient line */}
+                <div
+                  className="absolute left-[19px] top-2 bottom-2 w-px"
+                  style={{
+                    background: "linear-gradient(to bottom, oklch(0.72 0.19 230 / 0.5), oklch(0.68 0.16 290 / 0.5), transparent)",
+                  }}
+                />
+                <div className="space-y-3">
+                  {items.map((activity) => {
+                    const config = typeConfig[activity.type] || typeConfig.note
+                    const Icon = config.icon
+                    const time = new Date(activity.createdAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
+                    return (
+                      <div key={activity.id} className="relative flex items-start gap-4">
+                        {/* Timeline dot */}
+                        <div className="absolute -left-6 top-4 w-3 h-3 rounded-full bg-white/20 border-2 border-white/10 z-10" />
+                        <div className="glass-card rounded-xl p-4 flex items-start gap-4 flex-1">
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${config.color}`}>
+                            <Icon className="h-5 w-5" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <p className="font-medium text-sm">{activity.title}</p>
+                              <span className="text-[11px] font-medium glass rounded-full px-2.5 py-0.5 text-muted-foreground">
+                                {config.label}
+                              </span>
+                            </div>
+                            {activity.description && (
+                              <p className="text-xs text-muted-foreground line-clamp-2">{activity.description}</p>
+                            )}
+                            <div className="flex items-center gap-3 mt-1.5 text-[10px] text-muted-foreground/70">
+                              {activity.client && (
+                                <span>Client: {activity.client.name}</span>
+                              )}
+                              {activity.property && (
+                                <span>Property: {activity.property.title}</span>
+                              )}
+                            </div>
+                          </div>
+                          {/* Prominent time display */}
+                          <div className="flex-shrink-0 text-right">
+                            <span className="text-sm font-semibold text-white/70">{time}</span>
+                          </div>
                         </div>
-                        {activity.description && (
-                          <p className="text-xs text-muted-foreground line-clamp-2">{activity.description}</p>
-                        )}
-                        <div className="flex items-center gap-3 mt-1.5 text-[10px] text-muted-foreground/70">
-                          {activity.client && (
-                            <span>Client: {activity.client.name}</span>
-                          )}
-                          {activity.property && (
-                            <span>Property: {activity.property.title}</span>
-                          )}
-                          <span>{new Date(activity.createdAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</span>
-                        </div>
                       </div>
-                    </div>
-                  )
-                })}
+                    )
+                  })}
+                </div>
               </div>
             </div>
           ))}
@@ -183,14 +232,14 @@ export default function ActivityPage() {
 
       {/* Add Activity Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="glass-dialog">
+        <DialogContent className="glass-dialog border-white/[0.08]">
           <DialogHeader>
             <DialogTitle>Log Activity</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label>Type</Label>
+                <Label className="text-sm font-medium text-white/80">Type</Label>
                 <select name="type" required className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                   {Object.entries(typeConfig).map(([key, config]) => (
                     <option key={key} value={key}>{config.label}</option>
@@ -198,17 +247,17 @@ export default function ActivityPage() {
                 </select>
               </div>
               <div className="space-y-2">
-                <Label>Title</Label>
+                <Label className="text-sm font-medium text-white/80">Title</Label>
                 <Input name="title" required placeholder="Called about viewing..." className="glass-input" />
               </div>
             </div>
             <div className="space-y-2">
-              <Label>Description</Label>
+              <Label className="text-sm font-medium text-white/80">Description</Label>
               <Textarea name="description" rows={3} placeholder="Details of the activity..." className="glass-input" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label>Client (optional)</Label>
+                <Label className="text-sm font-medium text-white/80">Client (optional)</Label>
                 <select name="clientId" className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                   <option value="">None</option>
                   {clients.map((c) => (
@@ -217,7 +266,7 @@ export default function ActivityPage() {
                 </select>
               </div>
               <div className="space-y-2">
-                <Label>Property (optional)</Label>
+                <Label className="text-sm font-medium text-white/80">Property (optional)</Label>
                 <select name="propertyId" className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                   <option value="">None</option>
                   {properties.map((p) => (

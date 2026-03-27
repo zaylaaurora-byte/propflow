@@ -108,18 +108,25 @@ export default function OffersPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Offers</h1>
-          <p className="text-muted-foreground">{offers.length} total offers</p>
+        <div className="flex items-center gap-3">
+          <div className="page-header-icon stat-icon-cyan">
+            <PoundSterling className="h-5 w-5" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold gradient-text">Offers</h1>
+            <p className="text-muted-foreground">{offers.length} total offers</p>
+          </div>
         </div>
-        <Button
-          className="gap-2 bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white border-0 hover:opacity-90"
+        <button
+          className="btn-gradient rounded-xl px-5 py-2.5 text-sm font-semibold flex items-center gap-2"
           disabled={clients.length === 0 || properties.length === 0}
           onClick={() => setDialogOpen(true)}
         >
           <Plus className="h-4 w-4" /> Record Offer
-        </Button>
+        </button>
       </div>
+
+      <div className="neon-line mt-4" />
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
@@ -129,7 +136,7 @@ export default function OffersPage() {
               <Clock className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{pendingCount}</p>
+              <p className="text-3xl font-bold">{pendingCount}</p>
               <p className="text-xs text-muted-foreground">Pending</p>
             </div>
           </div>
@@ -140,7 +147,7 @@ export default function OffersPage() {
               <Check className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{acceptedCount}</p>
+              <p className="text-3xl font-bold">{acceptedCount}</p>
               <p className="text-xs text-muted-foreground">Accepted</p>
             </div>
           </div>
@@ -151,7 +158,7 @@ export default function OffersPage() {
               <PoundSterling className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{formatCurrency(totalValue)}</p>
+              <p className="text-3xl font-bold">{formatCurrency(totalValue)}</p>
               <p className="text-xs text-muted-foreground">Active Value</p>
             </div>
           </div>
@@ -199,7 +206,7 @@ export default function OffersPage() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <p className="font-semibold text-lg">{formatCurrency(offer.amount)}</p>
+                      <p className="text-xl font-bold gradient-text">{formatCurrency(offer.amount)}</p>
                       <span className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full border ${config.badgeClass}`}>
                         <StatusIcon className="h-3 w-3" />
                         {offer.status}
@@ -230,13 +237,13 @@ export default function OffersPage() {
                       <>
                         <button
                           onClick={() => updateStatus(offer.id, "accepted")}
-                          className="glass rounded-lg px-3 py-1.5 text-xs font-medium text-green-400 hover:bg-green-400/10 transition-colors"
+                          className="glass rounded-lg px-4 py-2 text-xs font-medium text-green-400 hover:bg-green-400/10 transition-colors"
                         >
                           Accept
                         </button>
                         <button
                           onClick={() => updateStatus(offer.id, "rejected")}
-                          className="glass rounded-lg px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-400/10 transition-colors"
+                          className="glass rounded-lg px-4 py-2 text-xs font-medium text-red-400 hover:bg-red-400/10 transition-colors"
                         >
                           Reject
                         </button>
@@ -258,13 +265,13 @@ export default function OffersPage() {
 
       {/* Add Offer Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="glass-dialog">
+        <DialogContent className="glass-dialog border-white/[0.08]">
           <DialogHeader>
             <DialogTitle>Record New Offer</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label>Property</Label>
+              <Label className="text-sm font-medium text-white/80">Property</Label>
               <select name="propertyId" required className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                 <option value="">Select property...</option>
                 {properties.map((p) => (
@@ -273,7 +280,7 @@ export default function OffersPage() {
               </select>
             </div>
             <div className="space-y-2">
-              <Label>Client (Buyer)</Label>
+              <Label className="text-sm font-medium text-white/80">Client (Buyer)</Label>
               <select name="clientId" required className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                 <option value="">Select client...</option>
                 {clients.map((c) => (
@@ -283,20 +290,20 @@ export default function OffersPage() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label>Offer Amount</Label>
+                <Label className="text-sm font-medium text-white/80">Offer Amount</Label>
                 <Input name="amount" type="number" required placeholder="250000" className="glass-input" />
               </div>
               <div className="space-y-2">
-                <Label>Expires</Label>
+                <Label className="text-sm font-medium text-white/80">Expires</Label>
                 <Input name="expiresAt" type="date" className="glass-input" />
               </div>
             </div>
             <div className="space-y-2">
-              <Label>Conditions</Label>
+              <Label className="text-sm font-medium text-white/80">Conditions</Label>
               <Input name="conditions" placeholder="Subject to survey, chain free..." className="glass-input" />
             </div>
             <div className="space-y-2">
-              <Label>Notes</Label>
+              <Label className="text-sm font-medium text-white/80">Notes</Label>
               <Textarea name="notes" rows={2} placeholder="Additional notes..." className="glass-input" />
             </div>
             <Button type="submit" className="w-full bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white border-0">

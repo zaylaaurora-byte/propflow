@@ -24,11 +24,11 @@ interface Task {
   createdAt: string
 }
 
-const priorityConfig: Record<string, { color: string; label: string }> = {
-  low: { color: "text-blue-400", label: "Low" },
-  medium: { color: "text-yellow-400", label: "Medium" },
-  high: { color: "text-orange-400", label: "High" },
-  urgent: { color: "text-red-400", label: "Urgent" },
+const priorityConfig: Record<string, { color: string; badge: string; label: string }> = {
+  low: { color: "text-blue-400", badge: "badge-low", label: "Low" },
+  medium: { color: "text-yellow-400", badge: "badge-medium", label: "Medium" },
+  high: { color: "text-orange-400", badge: "badge-high", label: "High" },
+  urgent: { color: "text-red-400", badge: "badge-urgent", label: "Urgent" },
 }
 
 const categoryLabels: Record<string, string> = {
@@ -108,17 +108,23 @@ export default function TasksPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Tasks</h1>
-          <p className="text-muted-foreground">{activeTasks.length} active tasks</p>
+        <div className="flex items-center gap-3">
+          <div className="page-header-icon stat-icon-purple">
+            <CheckSquare className="h-5 w-5" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold gradient-text">Tasks</h1>
+            <p className="text-muted-foreground">{activeTasks.length} active tasks</p>
+          </div>
         </div>
-        <Button
-          className="gap-2 bg-gradient-to-r from-[oklch(0.72_0.19_230)] to-[oklch(0.68_0.16_290)] text-white border-0 hover:opacity-90"
+        <button
+          className="btn-gradient rounded-xl px-5 py-2.5 text-sm font-semibold flex items-center gap-2"
           onClick={() => setDialogOpen(true)}
         >
           <Plus className="h-4 w-4" /> Add Task
-        </Button>
+        </button>
       </div>
+      <div className="neon-line mt-4" />
 
       {/* Stats */}
       <div className="grid grid-cols-4 gap-4">
@@ -128,7 +134,7 @@ export default function TasksPage() {
               <CheckSquare className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{activeTasks.length}</p>
+              <p className="text-3xl font-bold">{activeTasks.length}</p>
               <p className="text-xs text-muted-foreground">Active</p>
             </div>
           </div>
@@ -139,7 +145,7 @@ export default function TasksPage() {
               <Calendar className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{todayTasks.length}</p>
+              <p className="text-3xl font-bold">{todayTasks.length}</p>
               <p className="text-xs text-muted-foreground">Due Today</p>
             </div>
           </div>
@@ -150,7 +156,7 @@ export default function TasksPage() {
               <AlertTriangle className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{overdueTasks.length}</p>
+              <p className="text-3xl font-bold">{overdueTasks.length}</p>
               <p className="text-xs text-muted-foreground">Overdue</p>
             </div>
           </div>
@@ -161,7 +167,7 @@ export default function TasksPage() {
               <CheckSquare className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{completedTasks.length}</p>
+              <p className="text-3xl font-bold">{completedTasks.length}</p>
               <p className="text-xs text-muted-foreground">Completed</p>
             </div>
           </div>
@@ -170,16 +176,16 @@ export default function TasksPage() {
 
       {/* Filters */}
       <div className="flex gap-3 items-center">
-        <div className="flex glass rounded-lg overflow-hidden">
+        <div className="flex glass rounded-lg overflow-hidden border border-white/[0.06]">
           <button
             onClick={() => setShowCompleted(false)}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${!showCompleted ? "bg-white/10 text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            className={`px-5 py-2.5 text-sm font-semibold transition-colors ${!showCompleted ? "bg-white/15 text-foreground border-b-2 border-b-purple-400" : "text-muted-foreground hover:text-foreground hover:bg-white/5"}`}
           >
             Active ({activeTasks.length})
           </button>
           <button
             onClick={() => setShowCompleted(true)}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${showCompleted ? "bg-white/10 text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            className={`px-5 py-2.5 text-sm font-semibold transition-colors ${showCompleted ? "bg-white/15 text-foreground border-b-2 border-b-purple-400" : "text-muted-foreground hover:text-foreground hover:bg-white/5"}`}
           >
             Completed ({completedTasks.length})
           </button>
@@ -214,7 +220,7 @@ export default function TasksPage() {
             return (
               <div
                 key={task.id}
-                className={`glass-card rounded-xl p-4 flex items-start gap-3 ${isOverdue(task) ? "border-red-500/30" : ""}`}
+                className={`glass-card rounded-xl p-4 flex items-start gap-3 border border-white/[0.08] ${isOverdue(task) ? "border-l-2 border-l-red-500/60" : ""}`}
               >
                 <button
                   onClick={() => toggleComplete(task.id, task.completed)}
@@ -234,16 +240,16 @@ export default function TasksPage() {
                     <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{task.description}</p>
                   )}
                   <div className="flex items-center gap-3 mt-1.5">
-                    <span className={`flex items-center gap-1 text-[10px] font-medium ${pConfig.color}`}>
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full ${pConfig.badge}`}>
                       <Flag className="h-3 w-3" /> {pConfig.label}
                     </span>
                     {task.category && (
-                      <span className="text-[10px] text-muted-foreground glass rounded-full px-2 py-0.5">
+                      <span className="text-[11px] font-medium text-muted-foreground glass rounded-full px-2.5 py-0.5 border border-white/[0.06]">
                         {categoryLabels[task.category] || task.category}
                       </span>
                     )}
                     {task.dueDate && (
-                      <span className={`flex items-center gap-1 text-[10px] ${isOverdue(task) ? "text-red-400" : "text-muted-foreground"}`}>
+                      <span className={`flex items-center gap-1 text-[11px] ${isOverdue(task) ? "text-red-400 font-semibold" : "text-muted-foreground"}`}>
                         <Clock className="h-3 w-3" />
                         {isOverdue(task) ? "Overdue: " : "Due: "}
                         {formatDate(task.dueDate)}
@@ -265,22 +271,22 @@ export default function TasksPage() {
 
       {/* Add Task Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="glass-dialog">
+        <DialogContent className="glass-dialog border-white/[0.08]">
           <DialogHeader>
             <DialogTitle>Add New Task</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label>Title</Label>
+              <Label className="text-sm font-medium text-white/80">Title</Label>
               <Input name="title" required placeholder="Follow up with client..." className="glass-input" />
             </div>
             <div className="space-y-2">
-              <Label>Description</Label>
+              <Label className="text-sm font-medium text-white/80">Description</Label>
               <Textarea name="description" rows={2} placeholder="Details..." className="glass-input" />
             </div>
             <div className="grid grid-cols-3 gap-3">
               <div className="space-y-2">
-                <Label>Priority</Label>
+                <Label className="text-sm font-medium text-white/80">Priority</Label>
                 <select name="priority" defaultValue="medium" className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -289,7 +295,7 @@ export default function TasksPage() {
                 </select>
               </div>
               <div className="space-y-2">
-                <Label>Category</Label>
+                <Label className="text-sm font-medium text-white/80">Category</Label>
                 <select name="category" className="w-full h-10 rounded-lg px-3 text-sm glass-input">
                   <option value="">None</option>
                   <option value="follow-up">Follow-up</option>
@@ -300,7 +306,7 @@ export default function TasksPage() {
                 </select>
               </div>
               <div className="space-y-2">
-                <Label>Due Date</Label>
+                <Label className="text-sm font-medium text-white/80">Due Date</Label>
                 <Input name="dueDate" type="date" className="glass-input" />
               </div>
             </div>
